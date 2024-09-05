@@ -5,7 +5,7 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "maven-3.9.9"
     }
-    enivronment{
+    environment{
 		POSTGRES_USER = credentials('postgres_uname')
 		POSTGRES_PASSWORD = credentials('postgres_pwd')
 		DOCKER_PASSWORD = credentials('docker_pwd')
