@@ -18,7 +18,7 @@ pipeline {
 	                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DwaiB/crudpostgres']])
 	
 	                // Run Maven on a Unix agent.
-	                sh ('mvn clean install -Dpostgres_uname=$POSTGRES_USER -Dpostgres_pwd=$POSTGRES_PASSWORD')
+	                sh ('mvn clean install -DskipTests')
 
 				}
                 
