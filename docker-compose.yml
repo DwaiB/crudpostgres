@@ -1,9 +1,28 @@
-version: '3.8'
+version: "3.8"
+
 services:
-  postgres:
+  psql-db:
     image: postgres
-  
-  app:
-    build: .
+    container_name: psql-db
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=dev
+    ports:
+      - '5432:5432'
+
+  recipe:
+    container_name: crud_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://psql-db:5432/dev
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      - postgres
+      - psql-db
